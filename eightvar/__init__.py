@@ -1171,8 +1171,7 @@ def prnt(rawinp):
             # print varBool
             # print varStr
             # print varFloat
-            sys.stdout.flush()
-            sys.exit(0)   
+            sys.stdout.flush() 
             continue 
             
         elif inp.lower().startswith("8v"):
