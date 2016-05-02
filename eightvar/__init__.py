@@ -3,26 +3,27 @@ import time
 
 def prnt(rawinp):
     inp=""
+    versions = {}
     errmsg=''
     while len(rawinp) > 0 and errmsg == '':
-        if rawinp.startswith("\ "):
+        if rawinp.lower().startswith("\ "):
             inp=inp+" "
             rawinp=rawinp[2:]
         if rawinp[0]==" ":
             rawinp=rawinp[1:]
-        elif rawinp.startswith("\n"):
+        elif rawinp.lower().startswith("\n"):
             rawinp=rawinp[1:]
-        elif rawinp.startswith("#"):
+        elif rawinp.lower().startswith("#"):
             while rawinp[0:2] != '##':
                 rawinp = rawinp[1:]
             rawinp = rawinp[2:]
         else:
             inp=inp+rawinp[0]
             rawinp=rawinp[1:]
-    if not inp.lower().startswith("8v"):
-        errmsg = ("\n[8var] ERROR: 8var not initialized. ")
+    if not inp.lower().startswith("8v."):
+        errmsg = ("\n[8var] ERROR: 8var not initialized. File - main ")
     if not inp.lower().endswith("fin"):
-        errmsg = ("\n[8var] ERROR: Unexpected end of file.")
+        errmsg = ("\n[8var] ERROR: Unexpected end of file. File - main ")
     outLines=''
     version=''
     ucFloat=0
@@ -582,7 +583,25 @@ def prnt(rawinp):
             return u'\u00FE'
         if uc==255:
             return u'\u00FF'
-
+    
+    # if len(inp) > 0 and errmsg = '':
+    #     if inp.find('incl') > -1:
+    #         inclinp = inp[inp.find('incl')]
+    #         inclinp = inclinp[4:]
+    #         if inclinp[0] == '"':
+    #             inclfile = ''
+    #             while inp[0] != '"':
+    #                 inclfile = inclfile + inclinp[0]
+    #                 inclinp = inclinp[1:]
+    #             inclinp = inclinp[1:]
+    #         elif inp[0] == "'":
+    #             inclfile = ''
+    #             while inclinp[0] != "'":
+    #                 inclfile = inclfile + inclinp[0]
+    #                 inclinp = inclinp[1:]
+    #             inclinp = inclinp[1:]
+            
+    
     while len(inp) > 0 and errmsg == '':
         
         
@@ -866,7 +885,54 @@ def prnt(rawinp):
             delay=""
             continue
         
-            
+        elif inp.lower().startswith("incl"):
+            inp = inp[4:]
+            inclfile = ''
+            if inp[0] == '"':
+                while inp[0] != '"':
+                    inclfile = inclfile + inp[0]
+                    inp = inp[1:]
+                inp = inp[1:]
+            elif inp[0] == "'":
+                while inp[0] != "'":
+                    inclfile = inclfile + inp[0]
+                    inp = inp[1:]
+                inp = inp[1:]
+            if len(inclfile) > 0:
+                inclfileread = open(inclfile, "r").read()
+                inpincl = ''
+                while len(inclfileread) > 0 and errmsg == '':
+                    if inclfileread.lower().startswith("\ "):
+                        inpincl=inpincl+" "
+                        inclfileread=inclfileread[2:]
+                    if inclfileread[0]==" ":
+                        inclfileread=inclfileread[1:]
+                    elif inclfileread.lower().startswith("\n"):
+                        inclfileread=inclfileread[1:]
+                    elif inclfileread.lower().startswith("#"):
+                        while inclfileread[0:2] != '##':
+                            inclfileread = inclfileread[1:]
+                        inclfileread = inclfileread[2:]
+                    else:
+                        inpincl=inpincl+inclfileread[0]
+                        inclfileread=inclfileread[1:]
+                if not inpincl.lower().startswith("8v"):
+                    errmsg = ("\n[8var] ERROR: 8var not initialized. File - " + inclfile + " ")
+                if not inpincl.lower().endswith("fin"):
+                    errmsg = ("\n[8var] ERROR: Unexpected end of file. File - " + inclfile + " ")
+                inpincl = inpincl[3:]
+                version = ''
+                while inpincl[0:2] != 'v.':
+                    version = version + inpincl[0]
+                    inpincl = inpincl[1:]
+                versions = versions + {inclfile: version}
+                version = ''
+                inpincl = inpincl[2:]
+                while len(inpincl) > 3:
+                    inp = inpincl[0] + inp
+                    inpincl = inpincl[1:]
+                inpincl = ''    
+                    
         elif inp.lower().startswith("in"):
             inp = inp[2:]
             if inp.lower()[0:3] in ['int', 'flt']:
@@ -902,7 +968,7 @@ def prnt(rawinp):
         # elif inp.lower().startswith("in"):
         #     inp = inp[1:]
         #     intp = ''
-        #     if inp.startswith('int'):
+        #     if inp.lower().startswith('int'):
         #         inp = inp[3:]
         #         if inp.lower()[0] in "01234567ln":
         #             intp = 'int'
@@ -922,7 +988,7 @@ def prnt(rawinp):
         #             inp = inp[1:] 
         #         else:
         #             errmsg = ("\n[8var] ERROR: Variable doesn't exist.")
-        #     elif inp.startswith('str'):
+        #     elif inp.lower().startswith('str'):
         #         inp = inp[3:]
         #         if inp.lower()[0] in "01234567ln":
         #             intp = 'str'
@@ -942,7 +1008,7 @@ def prnt(rawinp):
         #             inp = inp[1:] 
         #         else:
         #             errmsg = ("\n[8var] ERROR: Variable doesn't exist.")
-        #     elif inp.startswith('bool'):
+        #     elif inp.lower().startswith('bool'):
         #         inp = inp[3:]
         #         if inp.lower()[0] in "01234567ln":
         #             intp = 'bool'
@@ -963,7 +1029,7 @@ def prnt(rawinp):
         #         else:
         #             errmsg = ("\n[8var] ERROR: Variable doesn't exist.")
         #     
-        #     elif inp.startswith('float'):
+        #     elif inp.lower().startswith('float'):
         #         inp = inp[5:]
         #         if inp.lower()[0] in "01234567ln":
         #             intp = 'float'
@@ -984,7 +1050,7 @@ def prnt(rawinp):
         #         else:
         #             errmsg = ("\n[8var] ERROR: Variable doesn't exist.")
         #     
-        #     elif inp.startswith('flt'):
+        #     elif inp.lower().startswith('flt'):
         #         inp = inp[3:]
         #         if inp.lower()[0] in "01234567ln":
         #             intp = 'float'
@@ -1168,6 +1234,17 @@ def prnt(rawinp):
         #     inp=inp[3:]
         #     if inp.lower().startswith(""):
         
+        elif inp.lower().startswith("8v"):
+            inp=inp[2:]
+            version = ''
+            while not inp.lower().startswith("v."):
+                version=version+inp[0]
+                inp=inp[1:]
+            inp=inp[2:]
+            version=version.lower()
+            versions = {'main': version} + versions
+            version = ''
+        
         elif inp.lower().startswith("fin"):
             inp=inp[3:]
             sys.stdout.write("\n")                      
@@ -1178,13 +1255,9 @@ def prnt(rawinp):
             sys.stdout.flush() 
             continue 
             
-        elif inp.lower().startswith("8v"):
-            inp=inp[2:]
-            while not inp.startswith("v."):
-                version=version+inp[0]
-                inp=inp[1:]
-            inp=inp[2:]
-            version=version.lower()
+        
+            
+            
             
         else:
             inp=inp[1:]
