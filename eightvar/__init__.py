@@ -12,6 +12,10 @@ def prnt(rawinp):
             rawinp=rawinp[1:]
         elif rawinp.startswith("\n"):
             rawinp=rawinp[1:]
+        elif rawinp.startswith("#"):
+            while rawinp[0:2] != '##':
+                rawinp = rawinp[1:]
+            rawinp = rawinp[2:]
         else:
             inp=inp+rawinp[0]
             rawinp=rawinp[1:]
