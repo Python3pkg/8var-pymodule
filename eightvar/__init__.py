@@ -1,28 +1,39 @@
 import sys
 import time
+import os
 
 def prnt(rawinp):
     inp=""
     errmsg=''
-    while len(rawinp) > 0 and errmsg == '':
-        if rawinp.startswith("\ "):
-            inp=inp+" "
-            rawinp=rawinp[2:]
-        if rawinp[0]==" ":
-            rawinp=rawinp[1:]
-        elif rawinp.startswith("\n"):
-            rawinp=rawinp[1:]
-        elif rawinp.startswith("#"):
-            while rawinp[0:2] != '##':
-                rawinp = rawinp[1:]
-            rawinp = rawinp[2:]
-        else:
-            inp=inp+rawinp[0]
-            rawinp=rawinp[1:]
-    if not inp.lower().startswith("8v"):
-        errmsg = ("\n[8var] ERROR: 8var not initialized. ")
-    if not inp.lower().endswith("fin"):
-        errmsg = ("\n[8var] ERROR: Unexpected end of file.")
+    def wsrem(rawinp):
+        errmsg = ''
+        inp = ''
+        while len(rawinp) > 0 and errmsg == '':
+            if rawinp.startswith("\ "):
+                inp=inp+" "
+                rawinp=rawinp[2:]
+            if rawinp[0]==" ":
+                rawinp=rawinp[1:]
+            elif rawinp.startswith("\n"):
+                rawinp=rawinp[1:]
+            elif rawinp.startswith("#"):
+                while rawinp[0:2] != '##':
+                    rawinp = rawinp[1:]
+                rawinp = rawinp[2:]
+            else:
+                inp=inp+rawinp[0]
+                rawinp=rawinp[1:]
+        if not inp.lower().startswith("8v"):
+            print inp
+            errmsg = ("\n[8var] ERROR: 8var not initialized. ")
+            return errmsg
+        if not inp.lower().endswith("fin"):
+            errmsg = ("\n[8var] ERROR: Unexpected end of file.")
+            return errmsg
+        return inp
+    inp = wsrem(rawinp)
+    if inp.startswith("\n"):
+        errmsg = inp
     outLines=''
     version=''
     ucFloat=0
@@ -866,7 +877,43 @@ def prnt(rawinp):
             delay=""
             continue
         
-            
+        
+        elif inp.lower().startswith("incl"):
+            inp = inp[4:]
+            inclfilename = ''
+            if inp[0] == "'":
+                inp = inp[1:]
+                while inp[0] != "'":
+                    inclfilename = inclfilename + inp[0]
+                    inp = inp[1:]
+                inp = inp[1:]
+            elif inp[0] == '"':
+                inp = inp[1:]
+                while inp[0] != '"':
+                    inclfilename = inclfilename + inp[0]
+                    inp = inp[1:]
+                inp = inp[1:]
+            if not os.path.isfile(inclfilename):
+                errmsg = "\n[8var] File " + inclfilename + " not found. "
+                break
+            else:
+                inpincl = open(inclfilename, 'r').read()
+            inpincl = wsrem(inpincl)
+            if inpincl.startswith("\n"):
+                errmsg = inpincl
+                break    
+            else:
+                inpincl = inpincl[3:]
+                version = version + " --- " + inclfilename + " --- "
+                while not inpincl.startswith('v.'):
+                    version = version + inpincl[0]
+                    inpincl = inpincl[1:]
+                inpincl = inpincl[2:]
+                inpincl = inpincl[:-3]
+                inp = inpincl + inp
+                inclfileread = ''
+                inpincl = ''
+                    
         elif inp.lower().startswith("in"):
             inp = inp[2:]
             if inp.lower()[0:3] in ['int', 'flt']:
@@ -1063,6 +1110,7 @@ def prnt(rawinp):
                     inp=inp[1:]
                 else:
                     errmsg = ("\n[8var] ERROR: Variable doesn't exist.")
+                    break
             elif inp.lower().startswith("float"):
                 inp=inp[5:]
                 if inp.lower()[0] in "01234567l":
@@ -1073,6 +1121,7 @@ def prnt(rawinp):
                     inp=inp[1:]
                 else:
                     errmsg = ("\n[8var] ERROR: Variable doesn't exist.")
+                    break
             elif inp.lower().startswith("flt"):
                 inp=inp[3:]
                 if inp.lower()[0] in "01234567l":
