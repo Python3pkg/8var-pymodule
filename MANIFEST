@@ -2,3 +2,4 @@
 setup.cfg
 setup.py
 eightvar/__init__.py
+eightvar/__main__.py
