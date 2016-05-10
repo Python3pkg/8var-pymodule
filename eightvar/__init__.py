@@ -24,7 +24,6 @@ def prnt(rawinp):
                 inp=inp+rawinp[0]
                 rawinp=rawinp[1:]
         if not inp.lower().startswith("8v"):
-            print inp
             errmsg = ("\n[8var] ERROR: 8var not initialized. ")
             return errmsg
         if not inp.lower().endswith("fin"):
@@ -609,40 +608,40 @@ def prnt(rawinp):
         
         
         
-        if newStr is not 7:
-            while checkStr[newStr] is not False and newStr is not 8:
+        if newStr != 7:
+            while checkStr[newStr] != False and newStr != 8:
                 newStr=newStr+1
             if newStr==8:
                 strFin=1
         else:
-            if checkStr[newStr] is not False:
+            if checkStr[newStr] != False:
                 strFin=1
         
-        if newFloat is not 7:
-            while checkFloat[newFloat] is not False and newFloat is not 8:
+        if newFloat != 7:
+            while checkFloat[newFloat] != False and newFloat != 8:
                 newFloat=newFloat+1
             if newFloat==8:
                 floatFin=1
         else:
-            if checkStr[newStr] is not False:
+            if checkStr[newStr] != False:
                 strFin=1
         
-        if newBool is not 7:
-            while checkBool[newBool] is not False and newBool is not 8:
+        if newBool != 7:
+            while checkBool[newBool] != False and newBool != 8:
                 newBool=newBool+1
             if newBool==8:
                 boolFin=1
         else:
-            if checkBool[newBool] is not False:
+            if checkBool[newBool] != False:
                 boolFin=1
         
-        if newInt is not 7:
-            while checkInt[newInt] is not False and newInt is not 8:
+        if newInt != 7:
+            while checkInt[newInt] != False and newInt != 8:
                 newInt=newInt+1
             if newInt==8:
                 intFin=1
         else:
-            if checkInt[newInt] is not False:
+            if checkInt[newInt] != False:
                 intFin=1
         
         
@@ -664,7 +663,7 @@ def prnt(rawinp):
                     while inp[0] in "0123456789":
                         intVar=intVar+inp[0]
                         inp=inp[1:]
-                    if intVar is not '':
+                    if intVar != '':
                         if sub==1:
                             intVar="-"+intVar
                             sub=0
@@ -690,7 +689,7 @@ def prnt(rawinp):
                     while inp[0] in "0123456789":
                         intVar=intVar+inp[0]
                         inp=inp[1:]
-                    if intVar is not '':
+                    if intVar != '':
                         if add==1:
                             varInt[curInt]=varInt[curInt]+int(intVar)
                             add=0
@@ -752,7 +751,7 @@ def prnt(rawinp):
                 if newStr<=7:
                     inp=inp[1:]
                     strVar=""
-                    while inp[0] is not "'" and inp[0] is not '"':
+                    while inp[0] != "'" and inp[0] != '"':
                         inp=inp[1:]
                     if inp.lower()[0]=="'":
                         quotes="s"
@@ -760,11 +759,11 @@ def prnt(rawinp):
                         quotes="d"
                     inp=inp[1:]
                     if quotes=="s":
-                        while inp[0] is not "'":
+                        while inp[0] != "'":
                             strVar=strVar+inp[0]
                             inp=inp[1:]
                     if quotes=="d":
-                        while inp[0] is not '"':
+                        while inp[0] != '"':
                             strVar=strVar+inp[0]
                             inp=inp[1:]
                     inp=inp[1:]
@@ -784,14 +783,14 @@ def prnt(rawinp):
                 if inp.lower()[0]=="+":
                     add=1
                     inp=inp[1:]    
-                while inp[0] is not "'" and inp[0] is not '"':
+                while inp[0] != "'" and inp[0] != '"':
                     inp=inp[1:]
                 if inp.lower()[0]=="'":
                     quotes="s"
                 if inp.lower()[0]=='"':
                     quotes="d"
                 inp=inp[1:]
-                while inp[0] is not "'" and inp[0] is not '"':
+                while inp[0] != "'" and inp[0] != '"':
                     strVar=strVar+inp[0]
                     inp=inp[1:]
                 inp=inp[1:]
@@ -823,7 +822,7 @@ def prnt(rawinp):
                     while inp[0] in "0123456789.":
                         floatVar=floatVar+inp[0]
                         inp=inp[1:]
-                    if floatVar is not '':
+                    if floatVar != '':
                         if sub==1:
                             floatVar="-"+floatVar
                             sub=0
@@ -845,7 +844,7 @@ def prnt(rawinp):
                 while inp[0] in "0123456789.":
                     floatVar=floatVar+inp[0]
                     inp=inp[1:]
-                if floatVar is not '':
+                if floatVar != '':
                     if sub==1:
                         varFloat[curFloat]=varFloat[curFloat]-float(floatVar)
                         sub=0
@@ -1090,13 +1089,13 @@ def prnt(rawinp):
             inp=inp[3:]
             if inp.lower()[0]=="'":
                 inp=inp[1:]
-                while inp[0] is not "'":
+                while inp[0] != "'":
                     sys.stdout.write(inp[0])
                     inp=inp[1:]
                 inp=inp[1:]
             elif inp.lower()[0]=='"':
                 inp=inp[1:]
-                while inp[0] is not '"':
+                while inp[0] != '"':
                     sys.stdout.write(inp[0])
                     inp=inp[1:]
                 inp=inp[1:]
