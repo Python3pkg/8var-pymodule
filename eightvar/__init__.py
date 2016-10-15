@@ -594,9 +594,9 @@ def prnt(rawinp):
             return u'\u00FF'
 
     while len(inp) > 0 and errmsg == '':
-        
-        
-        
+
+
+
         add=0
         sub=0
         ucFloat=0
@@ -605,9 +605,9 @@ def prnt(rawinp):
         strVar=""
         floatVar=""
         delay=""
-        
-        
-        
+
+
+
         if newStr != 7:
             while checkStr[newStr] != False and newStr != 8:
                 newStr=newStr+1
@@ -616,7 +616,7 @@ def prnt(rawinp):
         else:
             if checkStr[newStr] != False:
                 strFin=1
-        
+
         if newFloat != 7:
             while checkFloat[newFloat] != False and newFloat != 8:
                 newFloat=newFloat+1
@@ -625,7 +625,7 @@ def prnt(rawinp):
         else:
             if checkStr[newStr] != False:
                 strFin=1
-        
+
         if newBool != 7:
             while checkBool[newBool] != False and newBool != 8:
                 newBool=newBool+1
@@ -634,7 +634,7 @@ def prnt(rawinp):
         else:
             if checkBool[newBool] != False:
                 boolFin=1
-        
+
         if newInt != 7:
             while checkInt[newInt] != False and newInt != 8:
                 newInt=newInt+1
@@ -643,9 +643,9 @@ def prnt(rawinp):
         else:
             if checkInt[newInt] != False:
                 intFin=1
-        
-        
-        
+
+
+
         if inp.lower().lower().startswith("int"):
             inp=inp[3:]
             if inp.lower().lower()[0]=="n":
@@ -703,9 +703,9 @@ def prnt(rawinp):
                 else:
                     errmsg = ("\n[8var] ERROR: Variable doesn't exist.")
             continue
-            
-            
-            
+
+
+
         elif inp.lower().lower().startswith("bool"):
             inp=inp[4:]
             if inp.lower().lower()[0]=="n":
@@ -722,7 +722,7 @@ def prnt(rawinp):
                         checkBool[newBool]=True
                         inp=inp[1:]
                 else:
-                    errmsg = ("\n[8var] ERROR: Out of empty variables of type bool.")    
+                    errmsg = ("\n[8var] ERROR: Out of empty variables of type bool.")
             elif inp.lower().lower()[0] in "01234567l":
                 if inp.lower().lower()[0]=="l":
                     curBool=lastBool
@@ -739,9 +739,9 @@ def prnt(rawinp):
             else:
                 errmsg = ("\n[8var] ERROR: Variable doesn't exist.")
             continue
-        
-        
-        
+
+
+
         elif inp.lower().lower().startswith("str"):
             inp=inp[3:]
             if inp.lower().lower()[0]=="n":
@@ -770,9 +770,9 @@ def prnt(rawinp):
                     quotes=""
                     varStr[newStr]=strVar
                     checkStr[newStr]=True
-                    strVar=""    
+                    strVar=""
                 else:
-                    errmsg = ("\n[8var] ERROR: Out of variables of type str.")    
+                    errmsg = ("\n[8var] ERROR: Out of variables of type str.")
             if inp.lower()[0] in "01234567l":
                 if inp.lower()[0]=="l":
                     curStr=lastStr
@@ -782,7 +782,7 @@ def prnt(rawinp):
                 strVar=""
                 if inp.lower()[0]=="+":
                     add=1
-                    inp=inp[1:]    
+                    inp=inp[1:]
                 while inp[0] != "'" and inp[0] != '"':
                     inp=inp[1:]
                 if inp.lower()[0]=="'":
@@ -800,11 +800,11 @@ def prnt(rawinp):
                 else:
                     varStr[curStr]=strVar
                 checkStr[curStr]=True
-                strVar=""    
-                continue    
-                
-                
-                
+                strVar=""
+                continue
+
+
+
         elif inp.lower().startswith("float"):
             inp=inp[5:]
             if inp.lower()[0]=="n":
@@ -854,19 +854,19 @@ def prnt(rawinp):
                     else:
                         varFloat[curFloat]=float(floatVar)
                     checkFloat[curFloat]=True
-                    floatVar=""    
+                    floatVar=""
             continue
-                
-            
-        
+
+
+
         elif inp.lower().startswith("flt"):
             inp=inp[3:]
             inp="float"+inp
             continue
-        
-        
-            
-        elif inp.lower().startswith("dly"):    
+
+
+
+        elif inp.lower().startswith("dly"):
             inp=inp[3:]
             while inp[0] in "0123456789.":
                 delay=delay+inp[0]
@@ -875,8 +875,8 @@ def prnt(rawinp):
             sys.stdout.write("\n")
             delay=""
             continue
-        
-        
+
+
         elif inp.lower().startswith("incl"):
             inp = inp[4:]
             inclfilename = ''
@@ -900,7 +900,7 @@ def prnt(rawinp):
             inpincl = wsrem(inpincl)
             if inpincl.startswith("\n"):
                 errmsg = inpincl
-                break    
+                break
             else:
                 inpincl = inpincl[3:]
                 version = version + " --- " + inclfilename + " --- "
@@ -912,7 +912,7 @@ def prnt(rawinp):
                 inp = inpincl + inp
                 inclfileread = ''
                 inpincl = ''
-                    
+
         elif inp.lower().startswith("in"):
             inp = inp[2:]
             if inp.lower()[0:3] in ['int', 'flt']:
@@ -943,8 +943,8 @@ def prnt(rawinp):
                     inVar = inVar + inp[0]
                     inp = inp[1:]
                 inp = inVar + raw_input('') + inp
-        
-        
+
+
         # elif inp.lower().startswith("in"):
         #     inp = inp[1:]
         #     intp = ''
@@ -965,7 +965,7 @@ def prnt(rawinp):
         #                     checkInt[newInt]=True
         #             else:
         #                 outIn = int(inp.lower()[0])
-        #             inp = inp[1:] 
+        #             inp = inp[1:]
         #         else:
         #             errmsg = ("\n[8var] ERROR: Variable doesn't exist.")
         #     elif inp.startswith('str'):
@@ -985,7 +985,7 @@ def prnt(rawinp):
         #                     checkStr[newStr]=True
         #             else:
         #                 outIn = int(inp.lower()[0])
-        #             inp = inp[1:] 
+        #             inp = inp[1:]
         #         else:
         #             errmsg = ("\n[8var] ERROR: Variable doesn't exist.")
         #     elif inp.startswith('bool'):
@@ -1005,10 +1005,10 @@ def prnt(rawinp):
         #                     checkBool[newBool]=True
         #             else:
         #                 outIn = int(inp.lower()[0])
-        #             inp = inp[1:] 
+        #             inp = inp[1:]
         #         else:
         #             errmsg = ("\n[8var] ERROR: Variable doesn't exist.")
-        #     
+        #
         #     elif inp.startswith('float'):
         #         inp = inp[5:]
         #         if inp.lower()[0] in "01234567ln":
@@ -1026,10 +1026,10 @@ def prnt(rawinp):
         #                     checkFloat[newFloat]=True
         #             else:
         #                 outIn = int(inp.lower()[0])
-        #             inp = inp[1:] 
+        #             inp = inp[1:]
         #         else:
         #             errmsg = ("\n[8var] ERROR: Variable doesn't exist.")
-        #     
+        #
         #     elif inp.startswith('flt'):
         #         inp = inp[3:]
         #         if inp.lower()[0] in "01234567ln":
@@ -1047,12 +1047,12 @@ def prnt(rawinp):
         #                     checkFloat[newFloat]=True
         #             else:
         #                 outIn = int(inp.lower()[0])
-        #             inp = inp[1:] 
+        #             inp = inp[1:]
         #         else:
         #             errmsg = ("\n[8var] ERROR: Variable doesn't exist.")
-        #             
-        #     inpu = raw_input('')        
-        #             
+        #
+        #     inpu = raw_input('')
+        #
         #     if intp:
         #         if intp == 'int':
         #             toInt = ''
@@ -1084,7 +1084,7 @@ def prnt(rawinp):
         #                 if toStr != '':
         #                     varStr[outIn] = toStr
         #                     toStr = ''
-                
+
         elif inp.lower().startswith("out"):
             inp=inp[3:]
             if inp.lower()[0]=="'":
@@ -1163,17 +1163,17 @@ def prnt(rawinp):
                         outLines=outLines+inp[0]
                         inp=inp[1:]
                 else:
-                    outLines="1"  
+                    outLines="1"
                 outLinesInt=int(outLines)
                 outLines=""
                 while outLinesInt>0:
                     sys.stdout.write("\n")
                     outLinesInt=outLinesInt-1
-                outLinesInt=0    
+                outLinesInt=0
             continue
-            
-        
-        
+
+
+
         elif inp.lower().startswith("uout"):
             inp=inp[4:]
             if inp.lower()[0] in "0123456789":
@@ -1209,23 +1209,17 @@ def prnt(rawinp):
             sys.stdout.write(uc(ucodeInt))
             ucodeInt=0
             continue
-            
-            
-            
-        # if inp.lower().startswith("inp"):
-        #     inp=inp[3:]
-        #     if inp.lower().startswith(""):
-        
+
         elif inp.lower().startswith("fin"):
             inp=inp[3:]
-            sys.stdout.write("\n")                      
+            sys.stdout.write("\n")
             # print varInt
             # print varBool
             # print varStr
             # print varFloat
-            sys.stdout.flush() 
-            continue 
-            
+            sys.stdout.flush()
+            continue
+
         elif inp.lower().startswith("8v"):
             inp=inp[2:]
             while not inp.startswith("v."):
@@ -1233,7 +1227,7 @@ def prnt(rawinp):
                 inp=inp[1:]
             inp=inp[2:]
             version=version.lower()
-            
+
         else:
             inp=inp[1:]
             continue
@@ -1241,4 +1235,4 @@ def prnt(rawinp):
         return errmsg
         errmsg = ''
     else:
-        return ''    
+        return ''
