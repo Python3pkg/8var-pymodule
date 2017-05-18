@@ -400,28 +400,28 @@ def prnt(rawinp):
                 while inp[0] in '01234567ln+-':
                     inVar = inVar + inp[0]
                     inp = inp[1:]
-                inp = inVar + eval(input('')) + inp
+                inp = inVar + input('') + inp
             elif inp.lower()[0:3] == 'str':
                 inVar = inp[0:3]
                 inp = inp[3:]
                 while inp[0] in '01234567ln+-':
                     inVar = inVar + inp[0]
                     inp = inp[1:]
-                inp = inVar + '"' + eval(input('')) + '"' + inp
+                inp = inVar + '"' + input('') + '"' + inp
             elif inp.lower()[0:4] == 'bool':
                 inVar = inp[0:4]
                 inp = inp[4:]
                 while inp[0] in '01234567ln+-':
                     inVar = inVar + inp[0]
                     inp = inp[1:]
-                inp = inVar + eval(input('')) + inp
+                inp = inVar + input('') + inp
             elif inp.lower()[0:5] == 'float':
                 inVar = inp[0:5]
                 inp = inp[5:]
                 while inp[0] in '01234567ln+-':
                     inVar = inVar + inp[0]
                     inp = inp[1:]
-                inp = inVar + eval(input('')) + inp
+                inp = inVar + input('') + inp
 
         elif inp.lower().startswith("out"):
             inp=inp[3:]
